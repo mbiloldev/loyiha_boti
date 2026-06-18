@@ -144,15 +144,6 @@ def create_chart(data):
     plt.savefig("chart.png")
     plt.close()
 
-# Telegram buyruqlari
-def start(update: Update, context: CallbackContext):
-    update.message.reply_text(
-        "👋 Oltin Narxi Botiga Xush Kelibsiz!\n"
-        "Buyruqlar:\n"
-        "/price - Joriy narx\n"
-        "/forecast - 1 daqiqa prognozi\n"
-        "/chart - Narx grafigi\n"
-        "/alert <narx> - Narx ogohlantirishi\n"
         "📊 Grafik rasm yuboring, 1 daqiqalik prognoz beraman!"
     )
 
