@@ -3,6 +3,9 @@
 Ushbu Telegram bot traderlar uchun real vaqt rejimidagi (`real-time`) bozor tahlillari, grafik prognozlar va aniq **BUY / SELL** signallarini taqdim etish uchun ishlab chiqilgan. Bot nafaqat joriy holatni baholaydi, balki o'tmishdagi tahlillar arxivini ham foydalanuvchiga yubora oladi.
 
 ---
+<div align="center">
+  <img src="./banner.svg" width="100%"/>
+</div>
 
 ## ✨ Asosiy Funksiyalar (Features)
 
