@@ -1,13 +1,5 @@
 import MetaTrader5 as mt5
-import pandas as pd
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Conv2D, MaxPooling2D, Flatten
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
-from telegram import Update
-import matplotlib.pyplot as plt
-import seaborn as sns
+frge
 import sqlite3
 import cv2
 import logging
