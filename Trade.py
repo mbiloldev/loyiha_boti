@@ -1,17 +1,5 @@
 import MetaTrader5 as mt5
-frge
-import sqlite3
-import cv2
-import logging
-import os
-dfrg
-def connect_mt5():
-    if not mt5.initialize():
-        logger.error("MetaTrader5 ulanmadi!")
-        return False
-    logger.info("MetaTrader5 ulandi")
-    return True
-
+frgerwbetqfsdVRWB    EFDVSqwf
 # Oltin narxlarini olish
 def get_gold_price():
     if not mt5.symbol_select("XAUUSD", True):
