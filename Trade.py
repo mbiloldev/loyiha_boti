@@ -19,7 +19,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Bot tokeni (Telegramdan oling)
-TELEGRAM_TOKEN = "7593482245:AAEN-wvWlTZSpv95eSKgHJzOTg_2Igjbzmw"
+TELEGRAM_TOKEN = "7593482245:AAEN"
 
 # SQLite ma'lumotlar bazasini sozlash
 def init_db():
