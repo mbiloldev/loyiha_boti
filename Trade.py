@@ -44,11 +44,7 @@ def get_gold_price():
         logger.error("XAUUSD topilmadi")
         return None
     price_info = mt5.symbol_info_tick("XAUUSD")
-    if price_info is None:
-        logger.error("Narx ma'lumotlari olinmadiscdvfbte
-        return None
-    return {
-        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    if price_info is bgfw%S"),
         "bid": price_info.bid,
         "ask": price_info.ask,
         "price": (price_info.bid + price_info.ask) / 2
