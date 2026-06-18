@@ -4,16 +4,7 @@ import sqlite3
 import cv2
 import logging
 import os
-dgfet
-def init_db():
-    conn = sqlite3.connect("gold_prices.db")
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS prices
-                 (timestamp TEXT, price REAL, bid REAL, ask REAL)''')
-    conn.commit()
-    conn.close()
-
-# MetaTrader 5 bilan ulanish
+dfrg
 def connect_mt5():
     if not mt5.initialize():
         logger.error("MetaTrader5 ulanmadi!")
