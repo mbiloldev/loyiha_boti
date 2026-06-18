@@ -4,16 +4,7 @@ import sqlite3
 import cv2
 import logging
 import os
-from datetime import datetime
-dsfwg
-# Logging sozlamalari
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Bot tokeni (Telegramdan oling)
-TELEGRAM_TOKEN = "7593482245:AAEN-wvWlTZSpv95eSKgHJzOTg_2Igjbzmw"
-
-# SQLite ma'lumotlar bazasini sozlash
+dgfet
 def init_db():
     conn = sqlite3.connect("gold_prices.db")
     c = conn.cursor()
