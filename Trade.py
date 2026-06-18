@@ -1,4 +1,89 @@
-mm
+import MetaTrader5 as mt5
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Conv2D, MaxPooling2D, Flatten
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import Update
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sqlite3
+import cv2
+import logging
+import os
+from datetime import datetime
+
+# Logging sozlamalari
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Bot tokeni (Telegramdan oling)
+TELEGRAM_TOKEN = "7593482245:AAEN-wvWlTZSpv95eSKgHJzOTg_2Igjbzmw"
+
+# SQLite ma'lumotlar bazasini sozlash
+def init_db():
+    conn = sqlite3.connect("gold_prices.db")
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS prices
+                 (timestamp TEXT, price REAL, bid REAL, ask REAL)''')
+    conn.commit()
+    conn.close()
+
+# MetaTrader 5 bilan ulanish
+def connect_mt5():
+    if not mt5.initialize():
+        logger.error("MetaTrader5 ulanmadi!")
+        return False
+    logger.info("MetaTrader5 ulandi")
+    return True
+
+# Oltin narxlarini olish
+def get_gold_price():
+    if not mt5.symbol_select("XAUUSD", True):
+        logger.error("XAUUSD topilmadi")
+        return None
+    price_info = mt5.symbol_info_tick("XAUUSD")
+    if price_info is None:
+        logger.error("Narx ma'lumotlari olinmadi")
+        return None
+    return {
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "bid": price_info.bid,
+        "ask": price_info.ask,
+        "price": (price_info.bid + price_info.ask) / 2
+    }
+
+# Narxlarni bazaga saqlash
+def save_price_to_db(price_data):
+    conn = sqlite3.connect("gold_prices.db")
+    c = conn.cursor()
+    c.execute("INSERT INTO prices (timestamp, price, bid, ask) VALUES (?, ?, ?, ?)",
+              (price_data["time"], price_data["price"], price_data["bid"], price_data["ask"]))
+    conn.commit()
+    conn.close()
+
+# Tarixiy ma'lumotlarni olish
+def get_historical_data(minutes=60):
+    conn = sqlite3.connect("gold_prices.db")
+    df = pd.read_sql_query("SELECT * FROM prices ORDER BY timestamp DESC LIMIT ?", conn, params=(minutes,))
+    conn.close()
+    return df[::-1]
+
+# LSTM modeli (narx prognozi uchun)
+def build_lstm_model():
+    model = Sequential([
+        LSTM(30, input_shape=(10, 1), return_sequences=False),
+        Dense(15),
+        Dense(1)
+    ])
+    model.compile(optimizer='adam', loss='mse')
+    return model
+
+# CNN modeli (rasm tahlili uchun)
+def build_cnn_model():
+    model = Sequential([
+        Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
         MaxPooling2D((2, 2)),
         Conv2D(64, (3, 3), activation='relu'),
         MaxPooling2D((2, 2)),
@@ -59,6 +144,15 @@ def create_chart(data):
     plt.savefig("chart.png")
     plt.close()
 
+# Telegram buyruqlari
+def start(update: Update, context: CallbackContext):
+    update.message.reply_text(
+        "👋 Oltin Narxi Botiga Xush Kelibsiz!\n"
+        "Buyruqlar:\n"
+        "/price - Joriy narx\n"
+        "/forecast - 1 daqiqa prognozi\n"
+        "/chart - Narx grafigi\n"
+        "/alert <narx> - Narx ogohlantirishi\n"
         "📊 Grafik rasm yuboring, 1 daqiqalik prognoz beraman!"
     )
 
