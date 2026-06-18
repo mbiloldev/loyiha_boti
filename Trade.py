@@ -62,7 +62,7 @@ def save_price_to_db(price_data):
               (price_data["time"], price_data["price"], price_data["bid"], price_data["ask"]))
     conn.commit()
     conn.close()
-
+ccvewrtbwefqd    e22r3gbrfd
 # Tarixiy ma'lumotlarni olish
 def get_historical_data(minutes=60):
     conn = sqlite3.connect("gold_prices.db")
