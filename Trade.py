@@ -1,47 +1,4 @@
-import MetaTrader5 as mt5
-frgerwbetqfsdVRWB    EFDVSqwf
-# Oltin narxlarini olish
-def get_gold_price():
-    if not mt5.symbol_select("XAUUSD", True):
-        logger.error("XAUUSD topilmadi")
-        return None
-    price_info = mt5.symbol_info_tick("XAUUSD")
-    if price_info is bgfw%S"),
-        "bid": price_info.bid,
-        "ask": price_info.ask,
-        "price": (price_info.bid + price_info.ask) / 2
-    }
-
-# Narxlarni bazaga saqlash
-def save_price_to_db(price_data):
-    conn = sqlite3.connect("gold_prices.db")
-    c = conn.cursor()
-    c.execute("INSERT INTO prices (timestamp, price, bid, ask) VALUES (?, ?, ?, ?)",
-              (price_data["time"], price_data["price"], price_data["bid"], price_data["ask"]))
-    conn.commit()
-    conn.close()
-ccvewrtbwefqd    e22r3gbrfd
-# Tarixiy ma'lumotlarni olish
-def get_historical_data(minutes=60):
-    conn = sqlite3.connect("gold_prices.db")
-    df = pd.read_sql_query("SELECT * FROM prices ORDER BY timestamp DESC LIMIT ?", conn, params=(minutes,))
-    conn.close()
-    return df[::-1]
-
-# LSTM modeli (narx prognozi uchun)
-def build_lstm_model():
-    model = Sequential([
-        LSTM(30, input_shape=(10, 1), return_sequences=False),
-        Dense(15),
-        Dense(1)
-    ])
-    model.compile(optimizer='adam', loss='mse')
-    return model
-
-# CNN modeli (rasm tahlili uchun)
-def build_cnn_model():
-    model = Sequential([
-        Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
+mm
         MaxPooling2D((2, 2)),
         Conv2D(64, (3, 3), activation='relu'),
         MaxPooling2D((2, 2)),
